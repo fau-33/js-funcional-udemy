@@ -2,11 +2,11 @@ const fs = require("fs");
 const path = require("path");
 
 function lerDiretorio(caminho) {
-  return new Promise((resove, reject) => {
+  return new Promise((resolve, reject) => {
     try {
       let arquivos = fs.readdirSync(caminho);
       arquivos = arquivos.map((arquivo) => path.join(caminho, arquivo));
-      resove(arquivos);
+      resolve(arquivos);
     } catch (e) {
       reject(e);
     }
@@ -32,19 +32,19 @@ function elementosTerminadosCom(array, padraoTextual) {
   return array.filter((el) => el.endsWith(padraoTextual));
 }
 
-function removerSeVazio(array){
-  return array.filter(el => el.trim())
+function removerElementosSeVazio(array) {
+  return array.filter((el) => el.trim());
 }
 
-function removerSeIncluir(array, padraoTextual){
-  return array.filter(el => !el.includes(padraoTextual))
+function removerElementosSeIncluir(padraoTextual, array) {
+  return array.filter((el) => !el.includes(padraoTextual));
 }
 
-function removerSeApenasNumeros(array){
-  return array.filter( el => {
-    const num = parseInt(el.trim())
-    return num !== num
-  })
+function removerElementosSeApenasNumeros(array) {
+  return array.filter((el) => {
+    const num = parseInt(el.trim());
+    return isNaN(num);
+  });
 }
 
 module.exports = {
@@ -52,7 +52,7 @@ module.exports = {
   LerArquivo,
   lerArquivos,
   elementosTerminadosCom,
-  removerSeVazio,
-  removerSeIncluir,
-  removerSeApenasNumeros  
+  removerElementosSeVazio,
+  removerElementosSeIncluir,
+  removerElementosSeApenasNumeros,
 };
